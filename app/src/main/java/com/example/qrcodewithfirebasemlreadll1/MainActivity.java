@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getRawValue()));
                         startActivity(intent);
                     }
+                    finish();
                     break;
 
                     //read vcard
