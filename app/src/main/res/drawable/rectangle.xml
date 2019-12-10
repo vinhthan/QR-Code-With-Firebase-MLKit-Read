@@ -9,7 +9,7 @@
 
     <corners android:radius="8dp"/>
 
-    <solid android:color="#66FEFEFE"/>
+    <!--<solid android:color="#B4B4A2"/>-->
 
 
 

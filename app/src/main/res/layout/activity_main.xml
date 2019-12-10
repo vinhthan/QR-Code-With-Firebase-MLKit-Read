@@ -11,16 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <com.otaliastudios.cameraview.CameraView
+            android:background="#3C3C38"
             android:id="@+id/cameraView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
         <View
             android:layout_gravity="center"
             android:layout_width="200dp"
             android:background="@drawable/rectangle"
             android:layout_height="200dp"/>
+
+
 
     </FrameLayout>
 
