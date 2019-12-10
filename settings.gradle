@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name='QR Code With Firebase ML Read LL1'
