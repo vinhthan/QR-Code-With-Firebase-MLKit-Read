@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     case FirebaseVisionBarcode.TYPE_URL:{
                         // start brower intent
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getRawValue()));
-                        //tránh bị lỗi mở quá nhiều tab trên trình duyệt
+                        //tránh bị lỗi mở quá nhiều tab lặp lại trên trình duyệt
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
