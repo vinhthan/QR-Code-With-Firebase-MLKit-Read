@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Dexter.withActivity(this)
-                .withPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO})
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         btnStartAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isDetected = !isDetected;
+                isDetected = !isDetected;//chua dc phat hien de quet lai
                 btnStartAgain.setEnabled(isDetected);
             }
         });
@@ -123,22 +123,25 @@ public class MainActivity extends AppCompatActivity {
                     case FirebaseVisionBarcode.TYPE_TEXT: {
                         createdDialog(item.getRawValue());
                     }
+                    finish();
                     break;
 
                     //read url
                     case FirebaseVisionBarcode.TYPE_URL:{
                         // start brower intent
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getRawValue()));
+                        //tránh bị lỗi mở quá nhiều tab trên trình duyệt
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
-                    finish();
                     break;
+
 
                     //read vcard
                     case FirebaseVisionBarcode.TYPE_CONTACT_INFO:{
                         String into = new StringBuilder("-Title: ")
                                 .append(item.getContactInfo().getTitle())
-                                .append("\n")
+                                .append("\n\n")
                                 .append("-Name: ")
                                 .append(item.getContactInfo().getName().getFormattedName())
                                 .append("\n")
@@ -164,6 +167,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private FirebaseVisionImage getVisitionImageFromFrame(Frame frame) {
+
+        byte[] data = frame.getData();
+        FirebaseVisionImageMetadata metadata = new FirebaseVisionImageMetadata.Builder()
+                .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
+                .setHeight(frame.getSize().getHeight())
+                .setWidth(frame.getSize().getWidth())
+                //.setRotation(frame.getRotation())//only use it if you want to work on land scape
+                .build();
+        return FirebaseVisionImage.fromByteArray(data, metadata);
+    }
+
     private void createdDialog(String rawValue) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(rawValue)
@@ -185,15 +200,4 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private FirebaseVisionImage getVisitionImageFromFrame(Frame frame) {
-
-        byte[] data = frame.getData();
-        FirebaseVisionImageMetadata metadata = new FirebaseVisionImageMetadata.Builder()
-                .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
-                .setHeight(frame.getSize().getHeight())
-                .setWidth(frame.getSize().getWidth())
-                //.setRotation(frame.getRotation())//only use it if you want to work on land scape
-                .build();
-        return FirebaseVisionImage.fromByteArray(data, metadata);
-    }
 }
