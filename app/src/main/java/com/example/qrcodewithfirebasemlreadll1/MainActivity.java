@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         options = new FirebaseVisionBarcodeDetectorOptions.Builder()
-                .setBarcodeFormats(FirebaseVisionBarcode.FORMAT_QR_CODE)
+                .setBarcodeFormats(FirebaseVisionBarcode.FORMAT_QR_CODE | FirebaseVisionBarcode.FORMAT_DATA_MATRIX)
                 .build();
         detector = FirebaseVision.getInstance().getVisionBarcodeDetector(options);
 
