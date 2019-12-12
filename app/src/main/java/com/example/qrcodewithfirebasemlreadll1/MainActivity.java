@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             for (FirebaseVisionBarcode item : firebaseVisionBarcodes) {
                 int valueType = item.getValueType();
                 switch (valueType) {
+
                     //read text
                     case FirebaseVisionBarcode.TYPE_TEXT: {
                         createdDialog(item.getRawValue());
@@ -136,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
 
-
                     //read vcard
                     case FirebaseVisionBarcode.TYPE_CONTACT_INFO:{
                         String into = new StringBuilder("-Title: ")
@@ -153,6 +153,12 @@ public class MainActivity extends AppCompatActivity {
                                 .append("\n")
                                 .append("-Address: ")
                                 .append(item.getContactInfo().getAddresses().get(0).getAddressLines()[0])
+                                .append("\n")
+                                .append("-Country: ")
+                                .append(item.getContactInfo().getOrganization())
+                                /*.append("\n")
+                                .append("Geo point")
+                                .append(item.getGeoPoint()...)*/
                                 .toString();
                         createdDialog(into);
 
